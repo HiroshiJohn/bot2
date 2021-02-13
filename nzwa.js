@@ -1791,13 +1791,9 @@ async function starts() {
 					break
                                 case 'nsfwneko':
 				    try{
-						if (!isNsfw) return reply('âŒ *NSFW MATI* âŒ')
-                                                if (!isRegister) return reply(mess.only.daftarB)
-                                                if (isLimit(sender)) return reply(ind.limitend(pusname))
 						res = await fetchJson(`https://tobz-api.herokuapp.com/api/nsfwneko?apikey=BotWeA`, {method: 'get'})
 						buffer = await getBuffer(res.result)
 						nzwa.sendMessage(from, buffer, image, {quoted: mek, caption: 'mesum'})
-                                                await limitAdd(sender)
 					} catch (e) {
 						console.log(`Error :`, color(e,'red'))
 						reply('âŒ *ERROR* âŒ')
@@ -1990,13 +1986,9 @@ async function starts() {
                                         break
                                 case 'nsfwtrap':
                                         try{
-                                                if (!isNsfw) return reply('âŒ *NSFW MATI* âŒ')
-                                                if (!isRegister) return reply(mess.only.daftarB)
-                                                if (isLimit(sender)) return reply(ind.limitend(pusname))
                                                 res = await fetchJson(`https://tobz-api.herokuapp.com/nsfwtrap?apikey=BotWeA`, {method: 'get'})
                                                 buffer = await getBuffer(res.result)
                                                 nzwa.sendMessage(from, buffer, image, {quoted: mek, caption: 'Nih gambarnya kak...'})
-                                                await limitAdd(sender)
                                         } catch (e) {
                                                 console.log(`*Error* :`, color(e,'red'))
                                                 reply('âŒ *ERROR* âŒ')
