@@ -2415,7 +2415,7 @@ async function starts() {
                                         if (isRegister) return  reply(`「 SUDAH REGISTER 」 \n\nKakak dah register kak...`)
                                         if (!q.includes('|')) return  reply(ind.wrongf())
                                         const namaUser = q.substring(0, q.indexOf('|') - 0)
-                                        const umurUser = q.substring(q.lastindexOf('|') + 1)
+                                        const umurUser = q.substring(q.indexOf('|') + 1)
                                         const serialUser = createSerial(20)
                                         veri = sender
                                         if (isGroup) {
