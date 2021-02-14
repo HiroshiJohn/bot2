@@ -1637,6 +1637,7 @@ async function starts() {
 				case 'tovid':
 				    nzwa.updatePresence(from, Presence.composing)
                                     if (!isRegister) return reply(mess.only.daftarB)
+					if (isLimit(sender)) return reply(ind.limitend(pusname))
 					if (!isQuotedSticker) return reply('âŒ Marque o sticker âŒ')
 					reply(mess.wait)
 					encmedia = JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo
@@ -1665,7 +1666,7 @@ async function starts() {
 							.toFormat('mp4')
 							.save(ran)
 						}
-					}
+						await limitAdd(sender)
 					break
                 		case 'tomp3':
                 			nzwa.updatePresence(from, Presence.composing) 
