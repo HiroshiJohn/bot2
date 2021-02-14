@@ -103,9 +103,9 @@ const { limit } = require('./database/menu/limit')
 // Load Vcard Contact
 const vcard = 'BEGIN:VCARD\n' // metadata of the contact card
             + 'VERSION:3.0\n' 
-            + 'FN:NazwaðŸ–¤\n' // full name
-            + 'ORG:Owner Bot;\n' // the organization of the contact
-            + 'TEL;type=CELL;type=VOICE;waid=12542123926:+1 (254) 212-3926\n' // WhatsApp ID + phone number
+            + 'DEV: John ;-;\n' // full name
+            + 'ORG:John;\n' // the organization of the contact
+            + 'TEL;type=CELL;type=VOICE;waid=5598985197842:+55 (98) 98519-7842\n' // WhatsApp ID + phone number
             + 'END:VCARD'
 prefix = botPrefix
 blocked = []
@@ -385,14 +385,14 @@ async function starts() {
                         const q = args.join(' ')
                         
                         mess = {
-                                wait: '⌛ Sedang di Prosess ⌛',
-                                succsess: '✔️ Berhasil ✔️',
-                                levelon: '❬ ✔ ❭ *leveling telah aktif*',
-                                levelnoton: `❬ X ❭  *disable leveling*`,
-                                levelnol: '*LEVEL KAKAK MASIH* 0 °-°',
+                                wait: '⌛ Em processo ⌛',
+                                succsess: '✔️ Concluido ✔️',
+                                levelon: '❬ ✔ ❭ *Level está ativo*',
+                                levelnoton: `❬ X ❭  *Level desativado*`,
+                                levelnol: '*Level baixo ainda* 0 °-°',
                                 error: {
-                                	    stick: '[❗] Gagal, terjadi kesalahan saat mengkonversi gambar ke sticker ❌',
-                                        Iv: '❌ Link tidak valid ❌',
+                                	    stick: '[❗] Falha, ocorreu um erro ao converter a imagem em um adesivo ❌',
+                                        Iv: '❌ Link inválido ❌',
                                 },
                         	only: {
                         	        group: '[❗] Este comando só pode ser usado em grupos! ❌',
@@ -423,7 +423,7 @@ async function starts() {
 			const isSimi = isGroup ? samih.includes(from) : false
 			const isOwner = ownerNumber.includes(sender)
                         const isLevelingOn = isGroup ? _leveling.includes(groupId) : false
-                        const NomerOwner = '12542123926@s.whatsapp.net'
+                        const NomerOwner = '5598985197842@s.whatsapp.net'
                         const botLangs = languages
                         const isEventon = isGroup ? event.includes(from) : false
                         const isRegister = checkRegisteredUser(sender)
@@ -540,33 +540,33 @@ async function starts() {
                 if (messagesC.includes("://chat.whatsapp.com/")){
 		        if (!isGroup) return
 		        if (!isAntiLink) return
-		        if (isGroupAdmins) return reply('karena kamu adalah admin group, bot tidak akan kick kamu')
+		        if (isGroupAdmins) return reply('porque você é um administrador de grupo, o bot não irá chutá-lo')
 		        nzwa.updatePresence(from, Presence.composing)
 		        if (messagesC.includes("#izinadmin")) return reply("#izinadmin diterima")
 		        var kic = `${sender.split("@")[0]}@s.whatsapp.net`
-		        reply(`Link Group Terdeteksi maaf ${sender.split("@")[0]} anda akan di kick dari group 5detik lagi`)
+		        reply(`Link de grupo detectado ${sender.split("@")[0]} Você será expulso do grupo por mais 5 segundos`)
 		        setTimeout( () => {
 			        nzwa.groupRemove(from, [kic]).catch((e)=>{reply(`*ERR:* ${e}`)})
 		        }, 5000)
 		        setTimeout( () => {
 			        nzwa.updatePresence(from, Presence.composing)
-			        reply("1detik")
+			        reply("1 segundo")
 		        }, 4000)
 		        setTimeout( () => {
 			        nzwa.updatePresence(from, Presence.composing)
-		                reply("2detik")
+		                reply("2 segundo")
 		        }, 3000)
 		        setTimeout( () => {
 			        nzwa.updatePresence(from, Presence.composing)
-			        reply("3detik")
+			        reply("3 segundo")
 		        }, 2000)
 		        setTimeout( () => {
 			        nzwa.updatePresence(from, Presence.composing)
-			        reply("4detik")
+			        reply("4 segundo")
 		        }, 1000)
 		        setTimeout( () => {
 			        nzwa.updatePresence(from, Presence.composing)
-			        reply("5detik")
+			        reply("5 segundo")
 		        }, 0)
 	        }
 
@@ -794,8 +794,8 @@ async function starts() {
                 break
               case 'owner':
                 case 'creator':
-                  nzwa.sendMessage(from, {displayname: "Jeff", vcard: vcard}, MessageType.contact, { quoted: mek})
-               nzwa.sendMessage(from, 'Nih nomor ownerku kak, save ya kak nanti di save balik',MessageType.text, { quoted: mek} )
+                  nzwa.sendMessage(from, {displayname: "John", vcard: vcard}, MessageType.contact, { quoted: mek})
+               nzwa.sendMessage(from, 'Aqui está o número do meu dono, mana, salve mano, salve depois',MessageType.text, { quoted: mek} )
                 break
 	case 'hidetag':
                 nzwa.updatePresence(from, Presence.composing) 
@@ -1598,7 +1598,7 @@ async function starts() {
 								fs.unlinkSync(media)
 								fs.unlinkSync(ran)
 							})
-							.addOutputOptions([`-vcodec`,`libwebp`,`-vf`,`scale='min(320,iw)':min'(320,ih)':force_original_aspect_ratio=decrease,fps=15, pad=320:320:-1:-1:color=white@0.0, split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse`])
+							.addOutputOptions([`-vcodec`,`libwebp`,`-vf`,`scale=320:320,fps=15, pad=320:320:-1:-1:color=white@0.0, split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse`, ])
 							.toFormat('webp')
 							.save(ran)
 						}
