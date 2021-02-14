@@ -1263,14 +1263,14 @@ async function starts() {
 						const encmedia = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo : mek
 						buff = await nzwa.downloadMediaMessage(encmedia)
 						for (let _ of anu) {
-							nzwa.sendMessage(_.jid, buff, image, {caption: `*「 BROADCAST 」*\n\n${body.slice(4)}`})
+							nzwa.sendMessage(_.jid, buff, image, {caption: `*「 Transmissão para Todos 」*\n\n${body.slice(4)}`})
 						}
 						reply('')
 					} else {
 						for (let _ of anu) {
-							sendMess(_.jid, `*「 BROADCAST 」*\n\n${body.slice(4)}`)
+							sendMess(_.jid, `*「 Transmissão para Todos 」*\n\n${body.slice(4)}`)
 						}
-						reply('Suksess broadcast')
+						reply('Transmissão feita com sucesso')
 					}
 					break
 					case 'bcgc':
@@ -1572,7 +1572,7 @@ async function starts() {
 								fs.unlinkSync(media)
 								fs.unlinkSync(ran)
 							})
-							.addOutputOptions([`-vcodec`,`libwebp`,`-vf`,`scale='min(320,iw)':min'(320,ih)':force_original_aspect_ratio=decrease,fps=15, pad=320:320:-1:-1:color=white@0.0, split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse`])
+							.addOutputOptions([`-vcodec`,`libwebp`,`-vf`,`scale=320:320,fps=15, pad=320:320:-1:-1:color=white@0.0, split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse`])
 							.toFormat('webp')
 							.save(ran)
 						} else if ((isMedia && mek.message.videoMessage.seconds < 11 || isQuotedVideo && mek.message.extendedTextMessage.contextInfo.quotedMessage.videoMessage.seconds < 11) && args.length == 0) {
@@ -1635,9 +1635,35 @@ async function starts() {
 						fs.unlinkSync(ran)
 					})
 					break
-                	case 'tomp3':
-                	nzwa.updatePresence(from, Presence.composing) 
-                        if (!isRegister) return reply(mess.only.daftarB)
+				case 'tovid':
+				    nzwa.updatePresence(from, Presence.composing)
+                                    if (!isRegister) return reply(mess.only.daftarB)
+					if (!isQuotedSticker) return reply('âŒ Marque o sticker âŒ')
+					reply(mess.wait)
+					encmedia = JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo
+					media = await nzwa.downloadAndSaveMediaMessage(encmedia)
+					ran = getRandom('.mp4')
+					exec(`ffmpeg -i ${media} ${ran} libx264`, (err) => {
+						fs.unlinkSync(media)
+						if (err) return reply('âŒ Falha ao converter adesivos em videos âŒ')
+						buffer = fs.readFileSync(ran)
+						nzwa.sendMessage(from, buffer, video, {quoted: mek, caption: '>//<'})
+						fs.unlinkSync(ran)
+					})
+					break
+				case 'tovid2':
+				    nzwa.updatePresence(from, Presence.composing)
+                                    if (!isRegister) return reply(mess.only.daftarB)
+					if (!isQuotedSticker) return reply('âŒ Marque o sticker âŒ')
+					reply(mess.wait)
+					encmedia = JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo
+					media = await nzwa.downloadAndSaveMediaMessage(encmedia)
+					buffer = media
+					nzwa.sendMessage(from, buffer, video, {quoted: mek, caption: '>//<'})
+					break
+                		case 'tomp3':
+                			nzwa.updatePresence(from, Presence.composing) 
+                        		if (!isRegister) return reply(mess.only.daftarB)
 					if (!isQuotedVideo) return reply('âŒ reply videonya um âŒ')
 					reply(mess.wait)
 					encmedia = JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo
