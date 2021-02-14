@@ -1665,6 +1665,7 @@ async function starts() {
 							.toFormat('mp4')
 							.save(ran)
 						}
+					}
 					break
                 		case 'tomp3':
                 			nzwa.updatePresence(from, Presence.composing) 
