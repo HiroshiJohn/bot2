@@ -1648,12 +1648,6 @@ async function starts() {
 							.on('start', function (cmd) {
 								console.log(`Started : ${cmd}`)
 							})
-							.on('error', function (err) {
-								console.log(`Error : ${err}`)
-								fs.unlinkSync(media)
-								tipe = media.endsWith('.webp') ? 'sticker' : 'sticker'
-								reply(`âŒ Gagal, pada saat mengkonversi ${tipe} ke stiker`)
-							})
 							.on('end', function () {
 								console.log('Finish')
 								buff = fs.readFileSync(ran)
