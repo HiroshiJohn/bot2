@@ -58,7 +58,6 @@ const _limit = JSON.parse(fs.readFileSync('./database/json/limit.json'))
 const uang = JSON.parse(fs.readFileSync('./database/json/uang.json'))
 const _registered = JSON.parse(fs.readFileSync('./database/json/registered.json'))
 const antilink = JSON.parse(fs.readFileSync('./database/json/antilink.json'))
--c:v libx264 -pix_fmt yuv420p -crf 25 -b:v 0
 // Load options file
 const option = JSON.parse(fs.readFileSync('./options/option.json'))
 const { ind } = require('./options/language')
