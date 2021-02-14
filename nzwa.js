@@ -1641,12 +1641,28 @@ async function starts() {
 					reply(mess.wait)
 					encmedia = JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo
 					media = await nzwa.downloadAndSaveMediaMessage(encmedia)
-					ran = getRandom('.mp4')
-					exec(`ffmpeg -i ${media} -preset veryfast ${ran}`, (err) => {
+					ran = getRandom('.webp')
+					exec(`ffmpeg -i ${media} ${ran}`, (err) => {
 						fs.unlinkSync(media)
 						if (err) return reply('âŒ erro na conversão âŒ')
 						buffer = fs.readFileSync(ran)
 						nzwa.sendMessage(from, buffer, video, {mimetype: 'video/mp4', quoted: mek, caption: '>//<'})
+						fs.unlinkSync(ran)
+					})
+					break
+				case 'tovid2':
+				  nzwa.updatePresence(from, Presence.composing)
+                                    if (!isRegister) return reply(mess.only.daftarB)
+					if (!isQuotedSticker) return reply('âŒ reply stickernya um âŒ')
+					reply(mess.wait)
+					encmedia = JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo
+					media = await nzwa.downloadAndSaveMediaMessage(encmedia)
+					ran = getRandom('.webp')
+					exec(`ffmpeg -i ${media} ${ran}`, (err) => {
+						fs.unlinkSync(media)
+						if (err) return reply('âŒ erro na conversão âŒ')
+						buffer = fs.readFileSync(ran)
+						nzwa.sendMessage(from, buffer, video, {mimetype: 'video/webp', quoted: mek, caption: '>//<'})
 						fs.unlinkSync(ran)
 					})
 					break
