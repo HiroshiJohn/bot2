@@ -1635,36 +1635,20 @@ async function starts() {
 					})
 					break
 				case 'tovid':
-				    nzwa.updatePresence(from, Presence.composing)
+				  nzwa.updatePresence(from, Presence.composing)
                                     if (!isRegister) return reply(mess.only.daftarB)
-					if (!isQuotedSticker) return reply('âŒ Marque o sticker âŒ')
+					if (!isQuotedSticker) return reply('âŒ reply stickernya um âŒ')
 					reply(mess.wait)
 					encmedia = JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo
 					media = await nzwa.downloadAndSaveMediaMessage(encmedia)
-					ran = getRandom('mp4')
-						reply(mess.wait)
-						await ffmpeg(`./${media}`)
-							.inputFormat(media.split('.')[1])
-							.on('start', function (cmd) {
-								console.log(`Started : ${cmd}`)
-							})
-							.on('error', function (err) {
-								console.log(`Error : ${err}`)
-								fs.unlinkSync(media)
-								tipe = media.endsWith('.webp')
-								reply(`âŒ Gagal, pada saat mengkonversi ${tipe} ke stiker`)
-							})
-							.on('end', function () {
-								console.log('Finish')
-								buff = fs.readFileSync(ran)
-								nzwa.sendMessage(from, buff, video)
-								fs.unlinkSync(media)
-								fs.unlinkSync(ran)
-							})
-							.addOutputOptions([`-c:v`,`libx264`,`-vf`,`scale=320:320,fps=15, pad=320:320:-1:-1:color=white@0.0, split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse`, ])
-							.toFormat('mp4')
-							.save(ran)
-						})
+					ran = getRandom('.mp4')
+					exec(`ffmpeg -i ${media} ${ran} -c:v libx264`, (err) => {
+						fs.unlinkSync(media)
+						if (err) return reply('âŒ Gagal, pada saat mengkonversi sticker ke gambar âŒ')
+						buffer = fs.readFileSync(ran)
+						nzwa.sendMessage(from, buffer, video, {quoted: mek, caption: '>//<'})
+						fs.unlinkSync(ran)
+					})
 					break
                 		case 'tomp3':
                 			nzwa.updatePresence(from, Presence.composing) 
