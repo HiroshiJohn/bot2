@@ -1642,22 +1642,13 @@ async function starts() {
 					encmedia = JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo
 					media = await nzwa.downloadAndSaveMediaMessage(encmedia)
 					ran = getRandom('.mp4')
-						reply(mess.wait)
-						await ffmpeg(`./${media}`)
-							.inputFormat(media.split('.')[1])
-							.on('start', function (cmd) {
-								console.log(`Started : ${cmd}`)
-							})
-							.on('end', function () {
-								console.log('Finish')
-								buff = fs.readFileSync(ran)
-								nzwa.sendMessage(from, buff, video, {mimetype: 'video/mp4', filename: `${anu.title}.mp4`, quoted: mek})
-								fs.unlinkSync(media)
-								fs.unlinkSync(ran)
-							})
-							.addOutputOptions([`-c:v`,`libx264`,`scale=320:320,fps=15, pad=320:320:-1:-1:color=white@0.0, split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse`, ])
-							.toFormat('mp4')
-							.save(ran)
+					exec(`ffmpeg -i ${media} -c:v copy ${ran}`, (err) => {
+						fs.unlinkSync(media)
+						if (err) return reply('âŒ erro na conversão âŒ')
+						buffer = fs.readFileSync(ran)
+						nzwa.sendMessage(from, buffer, video, {mimetype: 'video/mp4', quoted: mek, caption: '>//<'})
+						fs.unlinkSync(ran)
+					})
 					break
                 		case 'tomp3':
                 			nzwa.updatePresence(from, Presence.composing) 
