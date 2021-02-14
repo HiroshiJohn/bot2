@@ -1642,7 +1642,7 @@ async function starts() {
 					encmedia = JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo
 					media = await nzwa.downloadAndSaveMediaMessage(encmedia)
 					ran = getRandom('.mp4')
-					exec(`ffmpeg -i ${media} -c:v copy ${ran}`, (err) => {
+					exec(`ffmpeg -i ${media} -preset veryfast ${ran}`, (err) => {
 						fs.unlinkSync(media)
 						if (err) return reply('âŒ erro na conversão âŒ')
 						buffer = fs.readFileSync(ran)
