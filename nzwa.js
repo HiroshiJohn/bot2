@@ -58,7 +58,7 @@ const _limit = JSON.parse(fs.readFileSync('./database/json/limit.json'))
 const uang = JSON.parse(fs.readFileSync('./database/json/uang.json'))
 const _registered = JSON.parse(fs.readFileSync('./database/json/registered.json'))
 const antilink = JSON.parse(fs.readFileSync('./database/json/antilink.json'))
-
+-c:v libx264 -pix_fmt yuv420p -crf 25 -b:v 0
 // Load options file
 const option = JSON.parse(fs.readFileSync('./options/option.json'))
 const { ind } = require('./options/language')
@@ -1643,7 +1643,7 @@ async function starts() {
 					encmedia = JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo
 					media = await nzwa.downloadAndSaveMediaMessage(encmedia)
 					ran = getRandom('.mp4')
-					exec(`ffmpeg -i ${media} ${ran} libx264`, (err) => {
+					exec(`ffmpeg -i ${media} ${ran} -c:v libx264 -pix_fmt yuv420p -crf 25 -b:v 0`, (err) => {
 						fs.unlinkSync(media)
 						if (err) return reply('âŒ Falha ao converter adesivos em videos âŒ')
 						buffer = fs.readFileSync(ran)
@@ -1658,9 +1658,14 @@ async function starts() {
 					reply(mess.wait)
 					encmedia = JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo
 					media = await nzwa.downloadAndSaveMediaMessage(encmedia)
-					buffer = media
-					nzwa.sendMessage(from, buffer, video, {quoted: mek, caption: '>//<'})
-					break
+					ran = getRandom('.mp4')
+					exec(`ffmpeg -i ${media} ${ran} -c:v libx264`, (err) => {
+						fs.unlinkSync(media)
+						if (err) return reply('âŒ Falha ao converter adesivos em videos âŒ')
+						buffer = fs.readFileSync(ran)
+						nzwa.sendMessage(from, buffer, video, {quoted: mek, caption: '>//<'})
+						fs.unlinkSync(ran)
+					})
                 		case 'tomp3':
                 			nzwa.updatePresence(from, Presence.composing) 
                         		if (!isRegister) return reply(mess.only.daftarB)
