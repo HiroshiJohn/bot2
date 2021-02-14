@@ -1651,11 +1651,11 @@ async function starts() {
 							.on('end', function () {
 								console.log('Finish')
 								buff = fs.readFileSync(ran)
-								nzwa.sendMessage(from, buff, video)
+								nzwa.sendMessage(from, buff, video, {mimetype: 'video/mp4', filename: `${anu.title}.mp4`, quoted: mek})
 								fs.unlinkSync(media)
 								fs.unlinkSync(ran)
 							})
-							.addOutputOptions([`-c:v`,`libx264`,`-vf`,`scale=320:320,fps=15, pad=320:320:-1:-1:color=white@0.0, split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse`, ])
+							.addOutputOptions([`-c:v`,`libx264`,`scale=320:320,fps=15, pad=320:320:-1:-1:color=white@0.0, split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse`, ])
 							.toFormat('mp4')
 							.save(ran)
 					break
