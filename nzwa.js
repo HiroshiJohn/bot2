@@ -395,11 +395,11 @@ async function starts() {
                                         Iv: '❌ Link tidak valid ❌',
                                 },
                         	only: {
-                        	        group: '[❗] Perintah ini hanya bisa di gunakan dalam group! ❌',
-                                        ownerG: `[❗] Perintah ini hanya bisa di gunakan oleh owner group! ❌`,
-                        	        admin: `[❗] Perintah ini hanya bisa di gunakan oleh admin group! ❌`,
-                                        Badmin: `[❗] Perintah ini hanya bisa di gunakan ketika bot menjadi admin! ❌`,
-                                        daftarB: `──「 BELUM REGISTER 」──\nHalo kak !\nKamu belum Register nih, register dulu yuk... \n\nCommand : ${prefix}register nama|umur\nContoh : ${prefix}register Nazwa|16`,
+                        	        group: '[❗] Este comando só pode ser usado em grupos! ❌',
+                                        ownerG: `[❗] Este comando só pode ser usado pelo grupo proprietário! ❌`,
+                        	        admin: `[❗] Este comando só pode ser usado por administradores de grupo! ❌`,
+                                        Badmin: `[❗] Este comando só pode ser usado quando o bot se torna administrador! ❌`,
+                                        daftarB: `──「 AINDA NÃO REGISTRADO 」──\nOlá Você !\nVocê ainda não se inscreveu, vamos registrar primeiro ... \n\nCommand : ${prefix}register nome/idade\nExemplo : ${prefix}register John/17`,
                                 }
                         }
                 	const apakah = ['Ya','Tidak']
@@ -2404,10 +2404,10 @@ async function starts() {
                                         }
                                         break
                                 case 'register':
-                                        if (isRegister) return  reply(`「 SUDAH REGISTER 」 \n\nKakak dah register kak...`)
+                                        if (isRegister) return  reply(`「 JÁ SE REGISTROU 」 \n\nEu te registrei ...`)
                                         if (!q.includes('|')) return  reply(ind.wrongf())
-                                        const namaUser = q.substring(0, q.indexOf('|') - 0)
-                                        const umurUser = q.substring(q.indexOf('|') + 1)
+                                        const namaUser = q.substring(0, q.indexOf('/') - 0)
+                                        const umurUser = q.substring(q.indexOf('/') + 1)
                                         const serialUser = createSerial(20)
                                         veri = sender
                                         if (isGroup) {
@@ -2415,13 +2415,13 @@ async function starts() {
                                                 await reply(ind.registered(namaUser, umurUser, serialUser, time, sender))
                                                 addATM(sender)
                                                 addLevelingId(sender)
-                                                console.log(color('[REGISTER]'), color(time, 'yellow'), 'Name:', color(namaUser, 'cyan'), 'Age:', color(umurUser, 'cyan'), 'Serial:', color(serialUser, 'cyan'), 'in', color(sender || groupName))
+                                                console.log(color('[REGISTER]'), color(time, 'yellow'), 'Nome:', color(namaUser, 'cyan'), 'Idade:', color(umurUser, 'cyan'), 'Serial:', color(serialUser, 'cyan'), 'in', color(sender || groupName))
                                         } else {
                                                 addRegisteredUser(sender, namaUser, umurUser, time, serialUser)
                                                 await reply(ind.registered(namaUser, umurUser, serialUser, time, sender))
                                                 addATM(sender)
                                                 addLevelingId(sender)
-                                                console.log(color('[REGISTER]'), color(time, 'yellow'), 'Name:', color(namaUser, 'cyan'), 'Age:', color(umurUser, 'cyan'), 'Serial:', color(serialUser, 'cyan'))
+                                                console.log(color('[REGISTER]'), color(time, 'yellow'), 'Nome:', color(namaUser, 'cyan'), 'Idade:', color(umurUser, 'cyan'), 'Serial:', color(serialUser, 'cyan'))
                                         }
                                         break
                                 case 'mining':
