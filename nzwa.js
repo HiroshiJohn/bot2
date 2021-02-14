@@ -1641,7 +1641,7 @@ async function starts() {
 					reply(mess.wait)
 					encmedia = JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo
 					media = await nzwa.downloadAndSaveMediaMessage(encmedia)
-					ran = getRandom('.mp4')
+					ran = getRandom('mp4')
 						reply(mess.wait)
 						await ffmpeg(`./${media}`)
 							.inputFormat(media.split('.')[1])
@@ -1651,13 +1651,13 @@ async function starts() {
 							.on('error', function (err) {
 								console.log(`Error : ${err}`)
 								fs.unlinkSync(media)
-								tipe = media.endsWith('.webp') ? 'sticker' : 'sticker'
+								tipe = media.endsWith('.webp')
 								reply(`âŒ Gagal, pada saat mengkonversi ${tipe} ke stiker`)
 							})
 							.on('end', function () {
 								console.log('Finish')
 								buff = fs.readFileSync(ran)
-								nzwa.sendMessage(from, buff, sticker)
+								nzwa.sendMessage(from, buff, video)
 								fs.unlinkSync(media)
 								fs.unlinkSync(ran)
 							})
